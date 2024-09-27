@@ -1,0 +1,151 @@
+[gd_scene load_steps=17 format=3 uid="uid://dr4kgoy0kxwpn"]
+
+[ext_resource type="Script" path="res://Scripts/SelectedObjectBehaviour.cs" id="1_mht11"]
+[ext_resource type="Material" uid="uid://f8gm6gyyq2xw" path="res://Materials/Gizmos/XAxisMaterial.tres" id="2_3skrl"]
+[ext_resource type="Material" uid="uid://bg66dxju32fms" path="res://Materials/Gizmos/YAxisMaterial.tres" id="3_lpodm"]
+[ext_resource type="Material" uid="uid://cb7uwu1brelfw" path="res://Materials/Gizmos/ZAxisMaterial.tres" id="4_cccff"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eg4u3"]
+size = Vector3(60, 1, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkkn0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_8nuxx"]
+material = SubResource("StandardMaterial3D_wkkn0")
+size = Vector3(60, 1, 60)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0eqem"]
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m5yvr"]
+material = ExtResource("2_3skrl")
+size = Vector3(3, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f7cic"]
+material = ExtResource("3_lpodm")
+size = Vector3(0.5, 3, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1utix"]
+size = Vector3(0.5, 3, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k0b4h"]
+material = ExtResource("4_cccff")
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_inaok"]
+size = Vector3(0.5, 0.5, 3)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vwt16"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8cwe"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tlgor"]
+material = SubResource("StandardMaterial3D_j8cwe")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(-0.837251, 0.302987, -0.455204, 0, 0.832458, 0.554089, 0.54682, 0.463912, -0.696976, -4.93885, 5.62052, -7.59531)
+fov = 70.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 40, 0)
+shadow_enabled = true
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Objects" node_paths=PackedStringArray("gizmo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+script = ExtResource("1_mht11")
+gizmo = NodePath("3DGizmo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground"]
+shape = SubResource("BoxShape3D_eg4u3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+mesh = SubResource("BoxMesh_8nuxx")
+
+[node name="3DGizmo" type="Node3D" parent="Objects/Ground"]
+
+[node name="XAxis" type="StaticBody3D" parent="Objects/Ground/3DGizmo"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground/3DGizmo/XAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+shape = SubResource("BoxShape3D_0eqem")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground/3DGizmo/XAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+mesh = SubResource("BoxMesh_m5yvr")
+skeleton = NodePath("../..")
+
+[node name="YAxis" type="StaticBody3D" parent="Objects/Ground/3DGizmo"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground/3DGizmo/YAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_f7cic")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground/3DGizmo/YAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_1utix")
+
+[node name="ZAxis" type="StaticBody3D" parent="Objects/Ground/3DGizmo"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Ground/3DGizmo/ZAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
+mesh = SubResource("BoxMesh_k0b4h")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Ground/3DGizmo/ZAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
+shape = SubResource("BoxShape3D_inaok")
+
+[node name="Capsule" type="StaticBody3D" parent="Objects" node_paths=PackedStringArray("gizmo")]
+script = ExtResource("1_mht11")
+gizmo = NodePath("3DGizmo")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Capsule"]
+shape = SubResource("CapsuleShape3D_vwt16")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Capsule"]
+mesh = SubResource("CapsuleMesh_tlgor")
+
+[node name="3DGizmo" type="Node3D" parent="Objects/Capsule"]
+
+[node name="XAxis" type="StaticBody3D" parent="Objects/Capsule/3DGizmo"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Capsule/3DGizmo/XAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+shape = SubResource("BoxShape3D_0eqem")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Capsule/3DGizmo/XAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+mesh = SubResource("BoxMesh_m5yvr")
+skeleton = NodePath("../..")
+
+[node name="YAxis" type="StaticBody3D" parent="Objects/Capsule/3DGizmo"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Capsule/3DGizmo/YAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_f7cic")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Capsule/3DGizmo/YAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_1utix")
+
+[node name="ZAxis" type="StaticBody3D" parent="Objects/Capsule/3DGizmo"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Objects/Capsule/3DGizmo/ZAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
+mesh = SubResource("BoxMesh_k0b4h")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Capsule/3DGizmo/ZAxis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5)
+shape = SubResource("BoxShape3D_inaok")
